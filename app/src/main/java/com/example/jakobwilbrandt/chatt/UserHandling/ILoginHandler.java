@@ -1,4 +1,7 @@
 package com.example.jakobwilbrandt.chatt.UserHandling;
 
-public class ILoginHandler {
+public interface ILoginHandler {
+
+    boolean CheckLogin();
+
 }
