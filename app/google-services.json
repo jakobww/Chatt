@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "515469837552",
+    "firebase_url": "https://chatt-56dc8.firebaseio.com",
+    "project_id": "chatt-56dc8",
+    "storage_bucket": "chatt-56dc8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:515469837552:android:3296bd550221dbb4",
+        "android_client_info": {
+          "package_name": "com.example.jakobwilbrandt.chatt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "515469837552-p3udmofm7jiqahpa6sbk1gc6jdbn3a33.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.jakobwilbrandt.chatt",
+            "certificate_hash": "4bad5037e7c420b92adb931998c8b35a0fdef463"
+          }
+        },
+        {
+          "client_id": "515469837552-uduiivp3v8k9a4r3qs6kmn1es6va57hc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDncGhrlAC7NvEYlr_rk66Zq4m4r3AldQo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "515469837552-uduiivp3v8k9a4r3qs6kmn1es6va57hc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

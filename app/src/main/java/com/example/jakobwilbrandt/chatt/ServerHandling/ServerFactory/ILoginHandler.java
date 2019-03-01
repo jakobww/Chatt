@@ -1,7 +1,7 @@
-package com.example.jakobwilbrandt.chatt.ServerHandling;
+package com.example.jakobwilbrandt.chatt.ServerHandling.ServerFactory;
 
 public interface ILoginHandler {
 
-    boolean CheckLogin();
+    boolean CheckIfLoggedIn();
 
 }

@@ -1,7 +1,7 @@
 package com.example.jakobwilbrandt.chatt.ServerHandling.ServerFactory;
 
-public class FirebaseServerProvider implements IServerProvider {
-    
+public class FirebaseServerFactory implements IServerFactory {
+
 
     @Override
     public ILoginHandler CreateLoginHandler() {

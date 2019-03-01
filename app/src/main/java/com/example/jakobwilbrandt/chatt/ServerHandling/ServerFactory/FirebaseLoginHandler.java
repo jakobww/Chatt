@@ -1,4 +1,4 @@
-package com.example.jakobwilbrandt.chatt.ServerHandling;
+package com.example.jakobwilbrandt.chatt.ServerHandling.ServerFactory;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -13,7 +13,7 @@ public class FirebaseLoginHandler implements ILoginHandler {
     boolean isLoggedIn = false;
 
     @Override
-    public boolean CheckLogin() {
+    public boolean CheckIfLoggedIn() {
         FirebaseAuth.AuthStateListener mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {

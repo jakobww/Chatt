@@ -1,4 +1,4 @@
 package com.example.jakobwilbrandt.chatt.ServerHandling.ServerFactory;
 
-public class FirebaseMessageRTDB {
+public class FirebaseMessageRTDB implements IMessageRTDB {
 }
