@@ -1,4 +1,4 @@
-package com.example.jakobwilbrandt.chatt.UserHandling;
+package com.example.jakobwilbrandt.chatt.ServerHandling;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
