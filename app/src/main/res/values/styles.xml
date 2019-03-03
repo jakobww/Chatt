@@ -13,4 +13,20 @@
         <item name ="android:windowBackground">@drawable/splash_bg</item>
     </style>
 
+    <!--Font size for regular text-->
+    <style name="FontSizeSmall">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <!--Font size for sub headlines-->
+    <style name="FontSizeMedium">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <!--Font size for headlines-->
+    <style name="FontSizeLarge">
+        <item name="android:textSize">30sp</item>
+    </style>
+
+
 </resources>

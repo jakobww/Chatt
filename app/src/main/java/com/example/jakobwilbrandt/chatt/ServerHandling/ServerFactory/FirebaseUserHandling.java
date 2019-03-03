@@ -3,14 +3,16 @@ package com.example.jakobwilbrandt.chatt.ServerHandling.ServerFactory;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.example.jakobwilbrandt.chatt.NetworkMonitor.NetworkChangeReceiver;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class FirebaseLoginHandler implements ILoginHandler {
+public class FirebaseUserHandling implements IUserHandling {
 
 
     String TAG = "FirebaseHandler";
     boolean isLoggedIn = false;
+
 
     @Override
     public boolean CheckIfLoggedIn() {
@@ -29,9 +31,19 @@ public class FirebaseLoginHandler implements ILoginHandler {
 
                 }
 
-
             }
         };
+
         return isLoggedIn;
     }
+
+    @Override
+    public boolean ConnectUserToDb() {
+
+
+
+        return false;
+    }
+
+
 }

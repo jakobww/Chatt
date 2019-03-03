@@ -1,11 +1,13 @@
 package com.example.jakobwilbrandt.chatt.ServerHandling.ServerFactory;
 
+import com.example.jakobwilbrandt.chatt.BaseActivity;
+
 public class FirebaseServerFactory implements IServerFactory {
 
 
     @Override
-    public ILoginHandler CreateLoginHandler() {
-        return new FirebaseLoginHandler();
+    public IUserHandling CreateLoginHandler() {
+        return new FirebaseUserHandling();
     }
 
     @Override
@@ -17,5 +19,10 @@ public class FirebaseServerFactory implements IServerFactory {
     @Override
     public IRoomRTDB CreateRoomRTDB() {
         return new FirebaseRoomRTDB();
+    }
+
+    @Override
+    public BaseActivity CreateLoginActivity() {
+        return new FirebaseLoginAcitivity();
     }
 }

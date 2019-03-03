@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Chatt</string>
+
+    <!--Login activity-->
+    <string name="proceed">Proceed</string>
+    <string name="sign_in">Sign in</string>
+    <string name="google_login">Login with Google</string>
+
+    <!--Facebook Login-->
+    <string name="facebook_login">Login with Facebook</string>
+    <string name="facebook_app_id">766449357068723</string>
+    <string name="fb_login_protocol_scheme">fb766449357068723</string>
+    <string name="authentication_failed">Authentication failed</string>
+    <string name="sign_in_fail">Sign in failed. Try again.</string>
+    <string name="sign_in_sucess">sign in success</string>
 </resources>
