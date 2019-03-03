@@ -2,6 +2,7 @@ package com.example.jakobwilbrandt.chatt.ServerHandling.ServerFactory;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.jakobwilbrandt.chatt.NetworkMonitor.NetworkChangeReceiver;
 import com.google.firebase.auth.FirebaseAuth;
@@ -16,23 +17,15 @@ public class FirebaseUserHandling implements IUserHandling {
 
     @Override
     public boolean CheckIfLoggedIn() {
-        FirebaseAuth.AuthStateListener mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    // User is signed in
-                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                    isLoggedIn = true;
-                } else {
-                    // User is signed out
-                    Log.d(TAG, "onAuthStateChanged:signed_out");
-                    isLoggedIn = false;
-
-                }
-
-            }
-        };
+        FirebaseAuth auth;
+        auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        if(user != null) {
+            isLoggedIn = true;
+        }
+        else{
+            isLoggedIn = false;
+        }
 
         return isLoggedIn;
     }
@@ -43,6 +36,19 @@ public class FirebaseUserHandling implements IUserHandling {
 
 
         return false;
+    }
+
+    @Override
+    public void LogOut() {
+        FirebaseAuth auth;
+        auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        if(user != null) {
+            auth.signOut();
+        }
+        else{
+            Log.d(TAG,"User not logged in and tried to log out");
+        }
     }
 
 

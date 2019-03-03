@@ -4,8 +4,9 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 import com.example.jakobwilbrandt.chatt.BaseActivity;
 import com.example.jakobwilbrandt.chatt.MainActivity;
@@ -16,7 +17,6 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -54,9 +54,10 @@ public class FirebaseLoginAcitivity extends BaseActivity {
         if(user != null) {
             Intent alreadyLoggedInIntent = new Intent(FirebaseLoginAcitivity.this,MainActivity.class);
             startActivity(alreadyLoggedInIntent);
+            finish();
         }
 
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_firebase_login);
         googleLoginBtn = findViewById(R.id.google_login_button);
         googleLoginBtn.setSize(SignInButton.SIZE_STANDARD);
 
@@ -104,6 +105,15 @@ public class FirebaseLoginAcitivity extends BaseActivity {
                     }
                 });
 
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        MenuItem item = menu.findItem(R.id.action_loginout);
+        item.setVisible(false);
+        return true;
 
     }
 

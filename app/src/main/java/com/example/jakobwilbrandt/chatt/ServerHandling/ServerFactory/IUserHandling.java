@@ -6,4 +6,6 @@ public interface IUserHandling {
 
     boolean ConnectUserToDb();
 
+    void LogOut();
+
 }

@@ -4,7 +4,7 @@ import com.example.jakobwilbrandt.chatt.BaseActivity;
 
 public interface IServerFactory {
 
-    IUserHandling CreateLoginHandler();
+    IUserHandling CreateUserHandler();
     IMessageRTDB CreateMessageRTDB();
     IRoomRTDB CreateRoomRTDB();
     BaseActivity CreateLoginActivity();

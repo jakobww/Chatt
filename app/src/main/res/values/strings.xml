@@ -13,4 +13,6 @@
     <string name="authentication_failed">Authentication failed</string>
     <string name="sign_in_fail">Sign in failed. Try again.</string>
     <string name="sign_in_sucess">sign in success</string>
+    <string name="action_logout">Log out</string>
+    <string name="action_login">Log in</string>
 </resources>

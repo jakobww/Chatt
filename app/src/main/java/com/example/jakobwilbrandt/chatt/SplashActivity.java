@@ -2,6 +2,9 @@ package com.example.jakobwilbrandt.chatt;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 
 import com.example.jakobwilbrandt.chatt.ServerHandling.ServerFactory.IUserHandling;
 import com.example.jakobwilbrandt.chatt.ServerHandling.ServerFactory.FirebaseLoginAcitivity;
@@ -21,6 +24,20 @@ public class SplashActivity extends BaseActivity {
             finish();
         }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+
+        MenuItem item = menu.findItem(R.id.action_loginout);
+        item.setVisible(false);
+        return true;
+
+    }
+
+
 
 
     }
+
+
+

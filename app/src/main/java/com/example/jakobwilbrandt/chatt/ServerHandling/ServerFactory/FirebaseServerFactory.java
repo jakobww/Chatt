@@ -6,7 +6,7 @@ public class FirebaseServerFactory implements IServerFactory {
 
 
     @Override
-    public IUserHandling CreateLoginHandler() {
+    public IUserHandling CreateUserHandler() {
         return new FirebaseUserHandling();
     }
 
