@@ -75,15 +75,17 @@ public class MainActivity extends BaseServiceActivity {
                 Rooms = chatService.getRooms();
                 IRoom room = new Room("Loove room");
                 Rooms.add(room);
-                Rooms.add(room);
-                Rooms.add(room);
-                Rooms.add(room);
 
 
                 View.OnClickListener clickListener = new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
+                        RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) v.getTag();
+                        int position = viewHolder.getAdapterPosition();
+
                         Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
+                        intent.putExtra("roomId", Rooms.get(position).getId());
                         startActivity(intent);
                         
                     }

@@ -24,4 +24,5 @@
     <string name="stop_bound_service">Bound service stopped</string>
     <string name="add_room_BC_code">add_city_BC</string>
     <string name="chevron_icon">chevron icon</string>
+    <string name="avatar_for_receiver">avatar for receiver</string>
 </resources>

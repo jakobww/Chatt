@@ -28,8 +28,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/avatar_received_message"
-                        android:text="hi man, how are you?"
+                        android:id="@+id/received_text"
                         android:background="@drawable/chat_bubble"
                         android:layout_width="wrap_content"
                         android:maxWidth="200dp"
@@ -42,18 +41,20 @@
                     <TextView
                         android:id="@+id/received_sender_time"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:textAlignment="textEnd"/>
 
                 </LinearLayout>
 
 
 
                 <ImageView
-                    android:id="@+id/chevron_icon"
+                    android:id="@+id/avatar_received_message"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="start"
-                    android:contentDescription="@string/chevron_icon"
+                    android:contentDescription="@string/avatar_for_receiver"
                     android:layout_gravity="start"
                     app:srcCompat="@drawable/ic_action_chevron" />
 

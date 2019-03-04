@@ -58,8 +58,8 @@ public class ChatActivity extends BaseServiceActivity {
 
                 messages = chatService.getMessages();
 
-                IMessage room = new Message("Jakob","hej","22");
-                messages.add(room);
+                IMessage message = new Message("Jakob","hej med dig hvordan går det her går det godt!!!!!","22");
+                messages.add(message);
 
                 //creating recyclerview adapter
                 MessageAdapter adapter = new MessageAdapter(getApplicationContext(), messages);

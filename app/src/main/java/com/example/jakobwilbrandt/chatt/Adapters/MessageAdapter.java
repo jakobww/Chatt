@@ -137,18 +137,18 @@ public class MessageAdapter extends RecyclerView.Adapter {
         public ReceivedMessageViewHolder(View itemView) {
             super(itemView);
 
-            messageText = itemView.findViewById(R.id.room_item_name);
+            messageText = itemView.findViewById(R.id.received_text);
             timeText = itemView.findViewById(R.id.received_sender_time);
-            avatar = itemView.findViewById(R.id.chevron_icon);
+            avatar = itemView.findViewById(R.id.avatar_received_message);
 
 
         }
 
         void bind(IMessage message) {
-            //messageText.setText(message.getMessageContent());
+            messageText.setText(message.getMessageContent());
 
             // Format the stored timestamp into a readable String using method.
-            //timeText.setText(message.getTimeOfMessage());
+            timeText.setText(message.getTimeOfMessage());
             //TODO: set sender name as well
         }
     }
