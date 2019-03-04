@@ -11,22 +11,33 @@ import android.os.PersistableBundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.jakobwilbrandt.chatt.Adapters.RoomAdapter;
 import com.example.jakobwilbrandt.chatt.DataClasses.IRoom;
+import com.example.jakobwilbrandt.chatt.DataClasses.Room;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends BaseServiceActivity {
 
 
-    private ArrayList<IRoom> Rooms = new ArrayList();
+    private List<IRoom> Rooms = new ArrayList();
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //getting the recyclerview from xml
+        recyclerView = findViewById(R.id.room_rec_view);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         //Starting the Chat service, to run in the background.
         //Making sure the service is started: If it is, it will not be started twice. Android does not allow this
@@ -50,8 +61,14 @@ public class MainActivity extends BaseServiceActivity {
 
 
                 Rooms = chatService.getRooms();
+                IRoom room = new Room("Loove room");
+                Rooms.add(room);
 
-                //TODO: Creating and setting the adapter for the ListView
+                //creating recyclerview adapter
+                RoomAdapter adapter = new RoomAdapter(getApplicationContext(), Rooms);
+
+                //setting adapter to recyclerview
+                recyclerView.setAdapter(adapter);
 
                 mBound = true;
 
