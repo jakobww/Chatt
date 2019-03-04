@@ -85,7 +85,7 @@ public class MainActivity extends BaseServiceActivity {
                         int position = viewHolder.getAdapterPosition();
 
                         Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
-                        intent.putExtra("roomId", Rooms.get(position).getId());
+                        intent.putExtra("roomIndex", position);
                         startActivity(intent);
                         
                     }

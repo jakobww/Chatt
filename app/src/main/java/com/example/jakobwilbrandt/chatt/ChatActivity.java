@@ -24,6 +24,8 @@ public class ChatActivity extends BaseServiceActivity {
 
     private List<IMessage> messages = new ArrayList();
     private RecyclerView recyclerView;
+    private IRoom currentRoom;
+    private int position = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,12 @@ public class ChatActivity extends BaseServiceActivity {
         //Initiating connection to the service and ready to bind service
         connectToService();
 
+
+        position = getIntent().getExtras().getInt("roomIndex");
+
+        if(chatService.getRooms().size() != 0){
+        currentRoom = chatService.getRooms().get(position);}
+
     }
 
 
@@ -56,10 +64,10 @@ public class ChatActivity extends BaseServiceActivity {
                 chatService = binder.getService();
 
 
-                messages = chatService.getMessages();
+                messages = chatService.getMessages(currentRoom);
 
-                IMessage message = new Message("Jakob","hej med dig hvordan går det her går det godt!!!!!","22");
-                messages.add(message);
+                IMessage message = new Message(serverFactory.CreateUserHandler().getCurrentUserId(),"hej med dig hvordan går det her går det godt!!!!!","22");
+                serverFactory.CreateRoomRTDB().addMessageToRoom(currentRoom,message);
 
                 //creating recyclerview adapter
                 MessageAdapter adapter = new MessageAdapter(getApplicationContext(), messages);

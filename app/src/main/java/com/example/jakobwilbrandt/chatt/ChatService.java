@@ -27,8 +27,8 @@ public class ChatService extends Service {
         return Rooms;
     }
 
-    public ArrayList<IMessage> getMessages() {
-        return Messages;
+    public ArrayList<IMessage> getMessages(IRoom room) {
+        return room.getMessages();
     }
 
 
