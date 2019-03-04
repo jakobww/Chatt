@@ -15,4 +15,11 @@
     <string name="sign_in_sucess">sign in success</string>
     <string name="action_logout">Log out</string>
     <string name="action_login">Log in</string>
+    <string name="start_bound_service">Bound to service</string>
+    <string name="broadcast_intent">broadCastIntent</string>
+    <string name="message_key">message</string>
+    <string name="got_message">got message</string>
+    <string name="BOUND_STATE">is_bound</string>
+    <string name="stop_bound_service">Bound service stopped</string>
+    <string name="add_room_BC_code">add_city_BC</string>
 </resources>
