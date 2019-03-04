@@ -4,9 +4,12 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.jakobwilbrandt.chatt.DataClasses.IUser;
 import com.example.jakobwilbrandt.chatt.NetworkMonitor.NetworkChangeReceiver;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.ArrayList;
 
 public class FirebaseUserHandling implements IUserHandling {
 
@@ -31,12 +34,23 @@ public class FirebaseUserHandling implements IUserHandling {
     }
 
     @Override
-    public boolean ConnectUserToDb() {
+    public ArrayList<IUser> LoadAllUsers() {
 
-
-
-        return false;
+        //TODO: loading users from firebase
+        return null;
     }
+
+    @Override
+    public void addUser(IUser user) {
+        //TODO: adding user to db
+    }
+
+    @Override
+    public String getCurrentUserId() {
+        //TODO: implement getting current user id.
+        return "random";
+    }
+
 
     @Override
     public void LogOut() {

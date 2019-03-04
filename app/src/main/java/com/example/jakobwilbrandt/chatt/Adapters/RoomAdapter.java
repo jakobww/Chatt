@@ -1,6 +1,7 @@
 package com.example.jakobwilbrandt.chatt.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.jakobwilbrandt.chatt.ChatActivity;
 import com.example.jakobwilbrandt.chatt.DataClasses.IRoom;
 import com.example.jakobwilbrandt.chatt.R;
 
@@ -27,10 +29,15 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
     //we are storing all the rooms in a list
     private List<IRoom> roomList;
 
+    //Click listener for reacting to clicks in activities
+    private View.OnClickListener clickListener;
+
+
     //getting the context and rooms list with constructor
-    public RoomAdapter(Context context, List<IRoom> roomList) {
+    public RoomAdapter(Context context, List<IRoom> roomList, View.OnClickListener clickListener) {
         this.context = context;
         this.roomList = roomList;
+        this.clickListener = clickListener;
     }
 
     @Override
@@ -69,12 +76,20 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
 
         public RoomViewHolder(View itemView) {
             super(itemView);
-
+            itemView.setTag(this);
+            itemView.setOnClickListener(clickListener);
             RoomNameTxt = itemView.findViewById(R.id.room_item_name);
             chevronIcon = itemView.findViewById(R.id.chevron_icon);
 
             //TODO: set last message sent time
 
         }
+
+
+
+
     }
+
+
+
 }

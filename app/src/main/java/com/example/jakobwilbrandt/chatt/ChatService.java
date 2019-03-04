@@ -10,6 +10,7 @@ import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import com.example.jakobwilbrandt.chatt.DataClasses.IMessage;
 import com.example.jakobwilbrandt.chatt.DataClasses.IRoom;
 
 import java.util.ArrayList;
@@ -20,9 +21,14 @@ public class ChatService extends Service {
     private final int NEW_MESSAGE = 0;
     private final IBinder mBinder = new BoundBinder();
     private ArrayList<IRoom> Rooms = new ArrayList<>();
+    private ArrayList<IMessage> Messages = new ArrayList<>();
 
     public ArrayList<IRoom> getRooms() {
         return Rooms;
+    }
+
+    public ArrayList<IMessage> getMessages() {
+        return Messages;
     }
 
 
