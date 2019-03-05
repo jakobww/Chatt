@@ -22,10 +22,6 @@ public class BaseServiceActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Initializing broadcast receiver in order to communicate with the chat service
-        LocalBroadcastManager.getInstance(this).registerReceiver(
-                mMessageReceiver, new IntentFilter(getString(R.string.broadcast_intent)));
-
         //Retrieve the current state of the service if saveInstanceState has been called
         if(savedInstanceState != null){
             mBound = savedInstanceState.getBoolean(getString(R.string.BOUND_STATE));
@@ -35,25 +31,7 @@ public class BaseServiceActivity extends BaseActivity {
 
     }
 
-    // Our handler for received Intents. This will be called whenever an Intent
-    // with an action named "broadCastIntent" is broadcasted.
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
 
-            //Find out what the message was about.
-            int message = intent.getIntExtra(getString(R.string.message_key),0);
-            switch(message){
-
-                /*case NEW_MESSAGE:
-                    //TODO: Handle new message - shall be moved to sub class
-                    break;
-                default:
-                    break;*/
-            }
-            Log.d(TAG, getString(R.string.got_message) + message);
-        }
-    };
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {

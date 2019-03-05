@@ -2,9 +2,10 @@ package com.example.jakobwilbrandt.chatt;
 
 import android.app.Notification;
 import android.app.Service;
-import android.content.ComponentName;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
+import android.content.IntentFilter;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
@@ -12,6 +13,8 @@ import android.util.Log;
 
 import com.example.jakobwilbrandt.chatt.DataClasses.IMessage;
 import com.example.jakobwilbrandt.chatt.DataClasses.IRoom;
+import com.example.jakobwilbrandt.chatt.ServerHandling.ServerFactory.IRoomRTDB;
+import com.example.jakobwilbrandt.chatt.ServerHandling.ServerFactory.IServerFactory;
 
 import java.util.ArrayList;
 
@@ -22,13 +25,16 @@ public class ChatService extends Service {
     private final IBinder mBinder = new BoundBinder();
     private ArrayList<IRoom> Rooms = new ArrayList<>();
     private ArrayList<IMessage> Messages = new ArrayList<>();
+    private IRoomRTDB roomRTDB;
 
     public ArrayList<IRoom> getRooms() {
         return Rooms;
     }
 
     public ArrayList<IMessage> getMessages(IRoom room) {
-        return room.getMessages();
+        if(room!=null){
+        return room.getMessages();}
+        else{return null;}
     }
 
 
@@ -36,7 +42,9 @@ public class ChatService extends Service {
     public ChatService() {
     }
 
-
+    public void setRoomRTDB(IRoomRTDB roomRTDB) {
+        this.roomRTDB = roomRTDB;
+    }
 
     //Function used to bind with the activities.
     public class BoundBinder extends Binder {
@@ -49,6 +57,7 @@ public class ChatService extends Service {
     //When bound...
     @Override
     public IBinder onBind(Intent intent) {
+
         Log.d(TAG,getString(R.string.start_bound_service));
         return mBinder;
     }
@@ -56,23 +65,23 @@ public class ChatService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
+
+        //Initializing broadcast receiver in order to communicate with the chat service
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+                mMessageReceiver, new IntentFilter("NEW_DATA_FOR_SERVICE"));
         return super.onStartCommand(intent, flags, startId);
     }
 
-    private void broadCastMessage(int ACTION_CODE,String message) {
-        Intent intent = new Intent(getString(R.string.broadcast_intent));
-        switch (ACTION_CODE) {
 
-
-            case NEW_MESSAGE:
-                intent.putExtra(getString(R.string.message_key), NEW_MESSAGE);
-                LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
-                break;
-            default:
-                break;
-        }
+    public void startListening(){
+        roomRTDB.startListening();
     }
 
+    @Override
+    public boolean stopService(Intent name) {
+        roomRTDB.stopListening();
+        return super.stopService(name);
+    }
 
     private void showNotification(String newMessage)
     {
@@ -83,6 +92,24 @@ public class ChatService extends Service {
                 .build();
         startForeground(1, notification);
     }
+
+
+    // Our handler for received Intents. This will be called whenever an Intent
+    // with an action named "broadCastIntent" is broadcasted.
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            Rooms = roomRTDB.getUpdatedRooms();
+
+            Intent intent2 = new Intent("NEW_DATA_FOR_ACTIVITIES");
+            LocalBroadcastManager.getInstance(context).sendBroadcast(intent2);
+
+        }
+    };
+
+
+
 
 
 

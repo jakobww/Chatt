@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.jakobwilbrandt.chatt.NetworkMonitor.NetworkChangeReceiver;
+import com.example.jakobwilbrandt.chatt.ServerHandling.ServerFactory.IRoomRTDB;
 import com.example.jakobwilbrandt.chatt.ServerHandling.ServerFactory.IServerFactory;
 import com.example.jakobwilbrandt.chatt.ServerHandling.ServerFactory.IUserHandling;
 import com.example.jakobwilbrandt.chatt.ServerHandling.ServerFactory.ServerProducer;
@@ -17,13 +18,14 @@ public class BaseActivity extends AppCompatActivity {
     String TAG = "BaseActivity";
     protected NetworkChangeReceiver networkChangeReceiver = new NetworkChangeReceiver();
     protected IServerFactory serverFactory = ServerProducer.getFactory("firebase");
+    protected IRoomRTDB roomRTDB;
+    protected IUserHandling userHandling;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
+        roomRTDB = serverFactory.CreateRoomRTDB();
+        userHandling = serverFactory.CreateUserHandler();
 
     }
 
@@ -33,15 +35,14 @@ public class BaseActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu, menu);
         MenuItem item = menu.findItem(R.id.action_loginout);
-        final IUserHandling Userhandler = serverFactory.CreateUserHandler();
-        boolean isLoggedIn = Userhandler.CheckIfLoggedIn();
+        boolean isLoggedIn = userHandling.CheckIfLoggedIn();
         if(isLoggedIn){
             item.setTitle(R.string.action_logout);
             item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
 
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
-                    Userhandler.LogOut();
+                    userHandling.LogOut();
                     BaseActivity baseActivity = serverFactory.CreateLoginActivity();
                     Intent intent = new Intent(BaseActivity.this, baseActivity.getClass());
                     startActivity(intent);

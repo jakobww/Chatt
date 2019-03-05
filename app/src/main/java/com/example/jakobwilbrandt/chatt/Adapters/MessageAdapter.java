@@ -9,12 +9,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.jakobwilbrandt.chatt.DataClasses.IMessage;
+import com.example.jakobwilbrandt.chatt.DataClasses.IRoom;
 import com.example.jakobwilbrandt.chatt.DataClasses.IUser;
 import com.example.jakobwilbrandt.chatt.R;
 import com.example.jakobwilbrandt.chatt.ServerHandling.ServerFactory.IServerFactory;
 import com.example.jakobwilbrandt.chatt.ServerHandling.ServerFactory.IUserHandling;
 import com.example.jakobwilbrandt.chatt.ServerHandling.ServerFactory.ServerProducer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,6 +41,12 @@ public class MessageAdapter extends RecyclerView.Adapter {
     public MessageAdapter(Context context, List<IMessage> messageList) {
         this.context = context;
         this.messageList = messageList;
+    }
+
+    public void refreshMessages(ArrayList<IMessage> Messages) {
+        this.messageList.clear();
+        this.messageList.addAll(Messages);
+        notifyDataSetChanged();
     }
 
     @Override
@@ -147,7 +155,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
         void bind(IMessage message) {
             messageText.setText(message.getMessageContent());
 
-            // Format the stored timestamp into a readable String using method.
+
             timeText.setText(message.getTimeOfMessage());
             //TODO: set sender name as well
         }

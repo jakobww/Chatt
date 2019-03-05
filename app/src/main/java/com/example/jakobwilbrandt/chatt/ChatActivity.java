@@ -1,36 +1,41 @@
 package com.example.jakobwilbrandt.chatt;
 
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.IBinder;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.content.LocalBroadcastManager;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.example.jakobwilbrandt.chatt.Adapters.MessageAdapter;
-import com.example.jakobwilbrandt.chatt.Adapters.RoomAdapter;
 import com.example.jakobwilbrandt.chatt.DataClasses.IMessage;
 import com.example.jakobwilbrandt.chatt.DataClasses.IRoom;
-import com.example.jakobwilbrandt.chatt.DataClasses.Message;
-import com.example.jakobwilbrandt.chatt.DataClasses.Room;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ChatActivity extends BaseServiceActivity {
 
-    private List<IMessage> messages = new ArrayList();
+    private ArrayList<IMessage> messages = new ArrayList();
     private RecyclerView recyclerView;
     private IRoom currentRoom;
     private int position = 0;
+    private MessageAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Initializing broadcast receiver in order to communicate with the chat service
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+                mMessageReceiver, new IntentFilter("NEW_DATA_FOR_ACTIVITIES"));
 
         //getting the recyclerview from xml
         recyclerView = findViewById(R.id.room_rec_view);
@@ -45,12 +50,6 @@ public class ChatActivity extends BaseServiceActivity {
         //Initiating connection to the service and ready to bind service
         connectToService();
 
-
-        position = getIntent().getExtras().getInt("roomIndex");
-
-        if(chatService.getRooms().size() != 0){
-        currentRoom = chatService.getRooms().get(position);}
-
     }
 
 
@@ -63,14 +62,21 @@ public class ChatActivity extends BaseServiceActivity {
                 ChatService.BoundBinder binder = (ChatService.BoundBinder) service;
                 chatService = binder.getService();
 
+                chatService.setRoomRTDB(roomRTDB);
+
+                position = getIntent().getExtras().getInt("roomIndex");
+
+
+                if(chatService.getRooms().size() > 0){
+                currentRoom = chatService.getRooms().get(position);}
+                else{
+                    finish();
+                }
 
                 messages = chatService.getMessages(currentRoom);
 
-                IMessage message = new Message(serverFactory.CreateUserHandler().getCurrentUserId(),"hej med dig hvordan går det her går det godt!!!!!","22");
-                serverFactory.CreateRoomRTDB().addMessageToRoom(currentRoom,message);
-
                 //creating recyclerview adapter
-                MessageAdapter adapter = new MessageAdapter(getApplicationContext(), messages);
+                adapter = new MessageAdapter(getApplicationContext(), messages);
 
                 //setting adapter to recyclerview
                 recyclerView.setAdapter(adapter);
@@ -92,4 +98,16 @@ public class ChatActivity extends BaseServiceActivity {
             }
         };
     }
+
+    // Our handler for received Intents. This will be called whenever an Intent
+    // with an action named "broadCastIntent" is broadcasted.
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            messages = chatService.getMessages(currentRoom);
+            adapter.refreshMessages(messages);
+
+        }
+    };
 }

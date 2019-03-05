@@ -1,7 +1,6 @@
 package com.example.jakobwilbrandt.chatt.Adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,10 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.jakobwilbrandt.chatt.ChatActivity;
 import com.example.jakobwilbrandt.chatt.DataClasses.IRoom;
 import com.example.jakobwilbrandt.chatt.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,17 +26,23 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
     private Context context;
 
     //we are storing all the rooms in a list
-    private List<IRoom> roomList;
+    private ArrayList<IRoom> roomList;
 
     //Click listener for reacting to clicks in activities
     private View.OnClickListener clickListener;
 
 
     //getting the context and rooms list with constructor
-    public RoomAdapter(Context context, List<IRoom> roomList, View.OnClickListener clickListener) {
+    public RoomAdapter(Context context, ArrayList<IRoom> roomList, View.OnClickListener clickListener) {
         this.context = context;
         this.roomList = roomList;
         this.clickListener = clickListener;
+    }
+
+    public void refreshRooms(ArrayList<IRoom> Rooms) {
+        this.roomList.clear();
+        this.roomList.addAll(Rooms);
+        notifyDataSetChanged();
     }
 
     @Override

@@ -8,6 +8,8 @@ public interface IMessage {
 
     String getMessageContent();
 
+    String getMessageId();
+
     String getTimeOfMessage();
 
 }
