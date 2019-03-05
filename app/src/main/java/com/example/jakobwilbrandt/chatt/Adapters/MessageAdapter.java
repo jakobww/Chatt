@@ -8,10 +8,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.jakobwilbrandt.chatt.DataClasses.IMessage;
 import com.example.jakobwilbrandt.chatt.DataClasses.IRoom;
 import com.example.jakobwilbrandt.chatt.DataClasses.IUser;
 import com.example.jakobwilbrandt.chatt.R;
+import com.example.jakobwilbrandt.chatt.ServerHandling.ServerFactory.FirebaseServerFactory;
 import com.example.jakobwilbrandt.chatt.ServerHandling.ServerFactory.IServerFactory;
 import com.example.jakobwilbrandt.chatt.ServerHandling.ServerFactory.IUserHandling;
 import com.example.jakobwilbrandt.chatt.ServerHandling.ServerFactory.ServerProducer;
@@ -33,6 +35,9 @@ public class MessageAdapter extends RecyclerView.Adapter {
     //we are storing all the messages in a list
     private List<IMessage> messageList;
 
+    private String photoUrl;
+    private boolean isOwnMessage = false;
+
     //Determines if sender or receiver
     private final int VIEW_TYPE_MESSAGE_SENT = 0;
     private final int VIEW_TYPE_MESSAGE_RECEIVED = 1;
@@ -41,6 +46,9 @@ public class MessageAdapter extends RecyclerView.Adapter {
     public MessageAdapter(Context context, List<IMessage> messageList) {
         this.context = context;
         this.messageList = messageList;
+        IServerFactory serverFactory = new FirebaseServerFactory();
+        IUserHandling userHandling = serverFactory.CreateUserHandler();
+        photoUrl = userHandling.getAvatarUrl();
     }
 
     public void refreshMessages(ArrayList<IMessage> Messages) {
@@ -56,10 +64,12 @@ public class MessageAdapter extends RecyclerView.Adapter {
         View view;
 
         if (viewType == VIEW_TYPE_MESSAGE_SENT) {
+            isOwnMessage = true;
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.message_item_sent, parent, false);
             return new SentMessageViewHolder(view);
         } else if (viewType == VIEW_TYPE_MESSAGE_RECEIVED) {
+            isOwnMessage = false;
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.message_item_received, parent, false);
             return new ReceivedMessageViewHolder(view);
@@ -114,14 +124,14 @@ public class MessageAdapter extends RecyclerView.Adapter {
 
         TextView messageText;
         TextView timeText;
-        ImageView avatar;
+        ImageView avatarOwn;
 
         public SentMessageViewHolder(View itemView) {
             super(itemView);
 
-            messageText = itemView.findViewById(R.id.room_item_name);
+            messageText = itemView.findViewById(R.id.sent_text);
             timeText = itemView.findViewById(R.id.sent_sender_time);
-            avatar = itemView.findViewById(R.id.chevron_icon);
+            avatarOwn = itemView.findViewById(R.id.avatar_sent_message);
 
 
 
@@ -133,13 +143,14 @@ public class MessageAdapter extends RecyclerView.Adapter {
             // Format the stored timestamp into a readable String using method.
             timeText.setText(message.getTimeOfMessage());
             //TODO: set sender name as well
+            Glide.with(context).load(photoUrl).into(avatarOwn);
         }
     }
 
     class ReceivedMessageViewHolder extends RecyclerView.ViewHolder {
 
         TextView messageText;
-        ImageView avatar;
+        ImageView avatarOther;
         TextView timeText;
 
         public ReceivedMessageViewHolder(View itemView) {
@@ -147,15 +158,18 @@ public class MessageAdapter extends RecyclerView.Adapter {
 
             messageText = itemView.findViewById(R.id.received_text);
             timeText = itemView.findViewById(R.id.received_sender_time);
-            avatar = itemView.findViewById(R.id.avatar_received_message);
-
+            avatarOther = itemView.findViewById(R.id.avatar_received_message);
 
         }
 
         void bind(IMessage message) {
             messageText.setText(message.getMessageContent());
-
-
+            IServerFactory serverFactory = ServerProducer.getFactory("firebase");
+            IUserHandling userHandling = serverFactory.CreateUserHandler();
+            String currentUserId = userHandling.getCurrentUserId();
+            if (message.getSenderId().equals(currentUserId)){
+            Glide.with(context).load(photoUrl).into(avatarOther);
+            }
             timeText.setText(message.getTimeOfMessage());
             //TODO: set sender name as well
         }

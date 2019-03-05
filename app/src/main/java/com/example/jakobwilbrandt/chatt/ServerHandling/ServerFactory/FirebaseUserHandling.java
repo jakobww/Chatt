@@ -16,6 +16,7 @@ public class FirebaseUserHandling implements IUserHandling {
 
     String TAG = "FirebaseHandler";
     boolean isLoggedIn = false;
+    FirebaseAuth auth;
 
 
     @Override
@@ -63,6 +64,14 @@ public class FirebaseUserHandling implements IUserHandling {
         else{
             Log.d(TAG,"User not logged in and tried to log out");
         }
+    }
+
+    @Override
+    public String getAvatarUrl(){
+        FirebaseAuth auth;
+        auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        return user.getPhotoUrl().toString();
     }
 
 

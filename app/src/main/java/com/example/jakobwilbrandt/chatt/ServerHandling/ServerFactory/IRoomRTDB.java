@@ -14,6 +14,7 @@ public interface IRoomRTDB {
     void addMessageToRoom(IRoom room, IMessage message);
     void stopListening();
     void setContext(Context context);
+    ArrayList<IMessage> getMessagesFromRoom(IRoom room);
     void addRoom(IRoom room);
 
 

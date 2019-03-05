@@ -12,12 +12,21 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.example.jakobwilbrandt.chatt.Adapters.MessageAdapter;
 import com.example.jakobwilbrandt.chatt.DataClasses.IMessage;
 import com.example.jakobwilbrandt.chatt.DataClasses.IRoom;
+import com.example.jakobwilbrandt.chatt.DataClasses.Message;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ChatActivity extends BaseServiceActivity {
@@ -28,19 +37,38 @@ public class ChatActivity extends BaseServiceActivity {
     private int position = 0;
     private MessageAdapter adapter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_chat);
 
         //Initializing broadcast receiver in order to communicate with the chat service
         LocalBroadcastManager.getInstance(this).registerReceiver(
                 mMessageReceiver, new IntentFilter("NEW_DATA_FOR_ACTIVITIES"));
 
         //getting the recyclerview from xml
-        recyclerView = findViewById(R.id.room_rec_view);
+        recyclerView = findViewById(R.id.message_rec_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        ImageView btn = findViewById(R.id.send_button);
+        final EditText inputTxt = findViewById(R.id.input_message);
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String message = inputTxt.getText().toString();
+                inputTxt.setText("");
+                DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss yyyy/MM/dd");
+                Date date = new Date();
+                dateFormat.format(date);
+                String time = date.toString();
+                IMessage msg = new Message(userHandling.getCurrentUserId(),message,time);
+                roomRTDB.addMessageToRoom(currentRoom,msg);
+
+            }
+        });
 
         //Starting the Chat service, to run in the background.
         //Making sure the service is started: If it is, it will not be started twice. Android does not allow this
@@ -61,8 +89,6 @@ public class ChatActivity extends BaseServiceActivity {
             public void onServiceConnected(ComponentName className, IBinder service) {
                 ChatService.BoundBinder binder = (ChatService.BoundBinder) service;
                 chatService = binder.getService();
-
-                chatService.setRoomRTDB(roomRTDB);
 
                 position = getIntent().getExtras().getInt("roomIndex");
 

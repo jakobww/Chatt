@@ -33,7 +33,7 @@ public class ChatService extends Service {
 
     public ArrayList<IMessage> getMessages(IRoom room) {
         if(room!=null){
-        return room.getMessages();}
+        return roomRTDB.getMessagesFromRoom(room);}
         else{return null;}
     }
 

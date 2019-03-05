@@ -39,7 +39,7 @@ public class FirebaseRoomRTDB implements IRoomRTDB {
         listener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
+                Rooms.clear();
                 if (dataSnapshot != null) {
 
                     for (DataSnapshot newSnap : dataSnapshot.getChildren()) {
@@ -61,16 +61,8 @@ public class FirebaseRoomRTDB implements IRoomRTDB {
 
                         }
 
-                        boolean isRoomInList = false;
-                        for(int i = 0; i < Rooms.size(); i++) {
 
-                            if(Rooms.get(i).getId().equals(tempRoom.getId())){
-                                isRoomInList = true;
-                            }
-
-                        }
-                        if(!isRoomInList){
-                        Rooms.add(tempRoom);}
+                        Rooms.add(tempRoom);
 
                     }
 
@@ -118,8 +110,20 @@ public class FirebaseRoomRTDB implements IRoomRTDB {
     public void addMessageToRoom(IRoom room, IMessage message){
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference("rooms");
-        ref.child(room.getId()).child("messages").setValue(message);
+        ref.child(room.getId()).child("messages").child(message.getMessageId()).setValue(message);
     }
+
+    @Override
+    public ArrayList<IMessage> getMessagesFromRoom(IRoom room){
+        String roomId = room.getId();
+        for(int i = 0; i < Rooms.size();i++){
+            if(roomId.equals(Rooms.get(i).getId())){
+                return Rooms.get(i).getMessages();
+            }
+        }
+        return null;
+    }
+
 
     @Override
     public void addRoom(IRoom room){

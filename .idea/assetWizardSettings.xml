@@ -13,64 +13,6 @@
                       <PersistentState>
                         <option name="children">
                           <map>
-                            <entry key="actionbar">
-                              <value>
-                                <PersistentState>
-                                  <option name="children">
-                                    <map>
-                                      <entry key="clipArt">
-                                        <value>
-                                          <PersistentState>
-                                            <option name="values">
-                                              <map>
-                                                <entry key="color" value="000000" />
-                                              </map>
-                                            </option>
-                                          </PersistentState>
-                                        </value>
-                                      </entry>
-                                      <entry key="clipartAsset">
-                                        <value>
-                                          <PersistentState>
-                                            <option name="values">
-                                              <map>
-                                                <entry key="url" value="jar:file:/Applications/Android%20Studio.app/Contents/plugins/android/lib/android.jar!/images/material_design_icons/content/ic_send_black_24dp.xml" />
-                                              </map>
-                                            </option>
-                                          </PersistentState>
-                                        </value>
-                                      </entry>
-                                    </map>
-                                  </option>
-                                  <option name="values">
-                                    <map>
-                                      <entry key="outputName" value="ic_action_send" />
-                                    </map>
-                                  </option>
-                                </PersistentState>
-                              </value>
-                            </entry>
-                            <entry key="launcher">
-                              <value>
-                                <PersistentState>
-                                  <option name="children">
-                                    <map>
-                                      <entry key="foregroundImage">
-                                        <value>
-                                          <PersistentState>
-                                            <option name="values">
-                                              <map>
-                                                <entry key="color" value="000000" />
-                                              </map>
-                                            </option>
-                                          </PersistentState>
-                                        </value>
-                                      </entry>
-                                    </map>
-                                  </option>
-                                </PersistentState>
-                              </value>
-                            </entry>
                             <entry key="launcherLegacy">
                               <value>
                                 <PersistentState>
@@ -81,7 +23,18 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="color" value="000000" />
+                                                <entry key="color" value="130047" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
+                                      <entry key="clipartAsset">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_accessibility_black_24dp.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -89,25 +42,9 @@
                                       </entry>
                                     </map>
                                   </option>
-                                </PersistentState>
-                              </value>
-                            </entry>
-                            <entry key="notification">
-                              <value>
-                                <PersistentState>
-                                  <option name="children">
+                                  <option name="values">
                                     <map>
-                                      <entry key="clipArt">
-                                        <value>
-                                          <PersistentState>
-                                            <option name="values">
-                                              <map>
-                                                <entry key="color" value="000000" />
-                                              </map>
-                                            </option>
-                                          </PersistentState>
-                                        </value>
-                                      </entry>
+                                      <entry key="outputName" value="ic_std_avatar" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -117,7 +54,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputIconType" value="ACTIONBAR" />
+                            <entry key="outputIconType" value="LAUNCHER_LEGACY" />
                           </map>
                         </option>
                       </PersistentState>
@@ -126,11 +63,6 @@
                 </map>
               </option>
             </PersistentState>
-          </value>
-        </entry>
-        <entry key="vectorWizard">
-          <value>
-            <PersistentState />
           </value>
         </entry>
       </map>

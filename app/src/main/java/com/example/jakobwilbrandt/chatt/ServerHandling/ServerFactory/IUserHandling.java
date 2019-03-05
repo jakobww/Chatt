@@ -16,4 +16,6 @@ public interface IUserHandling {
 
     void LogOut();
 
+    String getAvatarUrl();
+
 }
