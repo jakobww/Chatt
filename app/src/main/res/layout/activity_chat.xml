@@ -16,24 +16,25 @@
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:hint="@string/fill_in_message"
+        app:layout_constraintStart_toStartOf="parent"
+        android:inputType="" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-<<<<<<< Updated upstream
         app:srcCompat="@drawable/ic_action_send"
-        tools:layout_editor_absoluteX="419dp"
-        tools:layout_editor_absoluteY="702dp" />
-=======
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/editText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/editText"
         app:layout_constraintTop_toTopOf="@+id/editText"
-        app:srcCompat="@drawable/ic_action_send" />
->>>>>>> Stashed changes
+        tools:layout_editor_absoluteX="419dp"
+        tools:layout_editor_absoluteY="702dp"
+        android:contentDescription="TODO" />
+
+
 
 </android.support.constraint.ConstraintLayout>
