@@ -29,7 +29,7 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
                 .getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
 
         if (!wifi.isConnected() && !mobile.isConnected()) {
-            Toast.makeText(context,"No internet connection. Please reconnect.", Toast.LENGTH_LONG).show();
+            Toast.makeText(context,com.example.jakobwilbrandt.chatt.R.string.no_internet, Toast.LENGTH_LONG).show();
             isConnected = false;
         }
         else{

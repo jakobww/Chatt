@@ -6,9 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -41,6 +43,17 @@ public class MainActivity extends BaseServiceActivity {
         recyclerView = findViewById(R.id.room_rec_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setBackgroundColor(0xffffff);
+
+        final SwipeRefreshLayout pullToRefresh = findViewById(R.id.pullToRefresh);
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                roomRTDB.stopListening();
+                roomRTDB.startListening();
+                pullToRefresh.setRefreshing(false);
+            }
+        });
 
         View.OnClickListener clickListener = new View.OnClickListener() {
             @Override
@@ -101,28 +114,17 @@ public class MainActivity extends BaseServiceActivity {
 
 
                 /*Room room1;
-                Message message;
-                room1 = new Room();
-                message = new Message("jakob","jhasdsjnf hejsa","22:30");
-                room1.addMessage(message);
-                room1.addMessage(message);
-                room1.addMessage(message);
-                roomRTDB.addRoom(room1);room1 = new Room();
-                message = new Message("jakob","jhasdsjnf hejsa","22:30");
-                room1.addMessage(message);
-                room1.addMessage(message);
-                room1.addMessage(message);
-                roomRTDB.addRoom(room1);room1 = new Room();
-                message = new Message("jakob","jhasdsjnf hejsa","22:30");
-                room1.addMessage(message);
-                room1.addMessage(message);
-                room1.addMessage(message);
-                roomRTDB.addRoom(room1);room1 = new Room();
-                message = new Message("jakob","jhasdsjnf hejsa","22:30");
-                room1.addMessage(message);
-                room1.addMessage(message);
-                room1.addMessage(message);
+                room1 = new Room("Living room","A room where everything can be discussed");
+                roomRTDB.addRoom(room1);
+                room1 = new Room("Pan flutes", "A room with a pan flute community");
+                roomRTDB.addRoom(room1);
+                room1 = new Room("Great White","A room of sharks");
+                roomRTDB.addRoom(room1);
+                room1 = new Room("Minutes of sunshine", "What do you do during the day?");
                 roomRTDB.addRoom(room1);*/
+
+
+
 
 
 
@@ -148,11 +150,13 @@ public class MainActivity extends BaseServiceActivity {
         public void onReceive(Context context, Intent intent) {
 
             Rooms = chatService.getRooms();
-
             adapter.refreshRooms(Rooms);
 
         }
     };
+
+
+
 
 
 

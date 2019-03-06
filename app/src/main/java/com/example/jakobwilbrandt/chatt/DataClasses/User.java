@@ -11,6 +11,7 @@ public class User implements IUser {
         return this;
     }
 
+
     public String getAvatarPath() {
         return avatarPath;
     }

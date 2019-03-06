@@ -19,4 +19,12 @@ public interface IRoom {
 
     void addMessage(IMessage message);
 
+    void setAmountOfMsg(Integer amountOfMsg);
+
+    Integer getAmountOfMsg();
+
+    String getDescription();
+
+    void setDescription(String description);
+
 }

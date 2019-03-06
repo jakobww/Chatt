@@ -1,13 +1,22 @@
 package com.example.jakobwilbrandt.chatt;
 
+import android.annotation.TargetApi;
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Binder;
+import android.os.Build;
 import android.os.IBinder;
+import android.support.annotation.NonNull;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
@@ -18,6 +27,8 @@ import com.example.jakobwilbrandt.chatt.ServerHandling.ServerFactory.IServerFact
 
 import java.util.ArrayList;
 
+import static android.support.v4.app.NotificationCompat.PRIORITY_LOW;
+
 public class ChatService extends Service {
 
     String TAG = "ChatService";
@@ -26,7 +37,8 @@ public class ChatService extends Service {
     private ArrayList<IRoom> Rooms = new ArrayList<>();
     private ArrayList<IMessage> Messages = new ArrayList<>();
     private IRoomRTDB roomRTDB;
-
+    private Notification notification;
+    private NotificationCompat.Builder mBuilder;
     public ArrayList<IRoom> getRooms() {
         return Rooms;
     }
@@ -37,7 +49,9 @@ public class ChatService extends Service {
         else{return null;}
     }
 
-
+    public IRoomRTDB getRoomRTDB() {
+        return roomRTDB;
+    }
 
     public ChatService() {
     }
@@ -63,6 +77,12 @@ public class ChatService extends Service {
     }
 
     @Override
+    public void onCreate() {
+        super.onCreate();
+
+    }
+
+    @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
 
@@ -83,14 +103,19 @@ public class ChatService extends Service {
         return super.stopService(name);
     }
 
-    private void showNotification(String newMessage)
-    {
-        Notification notification = new Notification.Builder(getApplicationContext())
-                .setContentTitle(getString(R.string.app_name))
-                .setContentText(newMessage)
+    public void showNotification(String message, String title) {
+
+
+        Resources r = getResources();
+        Notification notification = new Notification.Builder(this)
                 .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setAutoCancel(true)
                 .build();
-        startForeground(1, notification);
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.notify(0, notification);
     }
 
 
@@ -102,8 +127,10 @@ public class ChatService extends Service {
 
             Rooms = roomRTDB.getUpdatedRooms();
 
+
             Intent intent2 = new Intent("NEW_DATA_FOR_ACTIVITIES");
             LocalBroadcastManager.getInstance(context).sendBroadcast(intent2);
+            showNotification(getString(com.example.jakobwilbrandt.chatt.R.string.new_data),getString(com.example.jakobwilbrandt.chatt.R.string.app_name));
 
         }
     };

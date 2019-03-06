@@ -1,11 +1,13 @@
 package com.example.jakobwilbrandt.chatt.Adapters;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -41,6 +43,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
     //Determines if sender or receiver
     private final int VIEW_TYPE_MESSAGE_SENT = 0;
     private final int VIEW_TYPE_MESSAGE_RECEIVED = 1;
+    private final int VIEW_TYPE_LOADING  = 2;
 
     //getting the context and messages list with constructor
     public MessageAdapter(Context context, List<IMessage> messageList) {
@@ -68,41 +71,47 @@ public class MessageAdapter extends RecyclerView.Adapter {
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.message_item_sent, parent, false);
             return new SentMessageViewHolder(view);
-        } else if (viewType == VIEW_TYPE_MESSAGE_RECEIVED) {
+        }
+        else{
             isOwnMessage = false;
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.message_item_received, parent, false);
             return new ReceivedMessageViewHolder(view);
         }
 
-        return null;
+
     }
 
 
 
 
 
-    // Determines the appropriate ViewType according to the sender of the message.
+    // Determines the appropriate ViewType according to the sender of the message or loading view.
     @Override
     public int getItemViewType(int position) {
         IMessage message = messageList.get(position);
 
+
+
+
         IServerFactory serverFactory = ServerProducer.getFactory("firebase");
         IUserHandling userHandling = serverFactory.CreateUserHandler();
         String currentUserId = userHandling.getCurrentUserId();
-        if (message.getSenderId().equals(currentUserId)) {
+        if(message.getSenderId().equals(currentUserId)) {
             // If the current user is the sender of the message
             return VIEW_TYPE_MESSAGE_SENT;
-        } else {
-            // If some other user sent the message
+        }
+        else{    // If some other user sent the message
             return VIEW_TYPE_MESSAGE_RECEIVED;
         }
+
+
     }
 
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        IMessage message = messageList.get(position);
+        IMessage message = messageList.get(holder.getAdapterPosition());
 
         switch (holder.getItemViewType()) {
             case VIEW_TYPE_MESSAGE_SENT:
@@ -110,6 +119,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
                 break;
             case VIEW_TYPE_MESSAGE_RECEIVED:
                 ((ReceivedMessageViewHolder) holder).bind(message);
+                break;
         }
     }
 
@@ -120,13 +130,13 @@ public class MessageAdapter extends RecyclerView.Adapter {
     }
 
 
-    class SentMessageViewHolder extends RecyclerView.ViewHolder {
+    private class SentMessageViewHolder extends RecyclerView.ViewHolder {
 
         TextView messageText;
         TextView timeText;
         ImageView avatarOwn;
 
-        public SentMessageViewHolder(View itemView) {
+        public SentMessageViewHolder(@NonNull View itemView) {
             super(itemView);
 
             messageText = itemView.findViewById(R.id.sent_text);
@@ -147,13 +157,13 @@ public class MessageAdapter extends RecyclerView.Adapter {
         }
     }
 
-    class ReceivedMessageViewHolder extends RecyclerView.ViewHolder {
+    private class ReceivedMessageViewHolder extends RecyclerView.ViewHolder {
 
         TextView messageText;
         ImageView avatarOther;
         TextView timeText;
 
-        public ReceivedMessageViewHolder(View itemView) {
+        public ReceivedMessageViewHolder(@NonNull View itemView) {
             super(itemView);
 
             messageText = itemView.findViewById(R.id.received_text);
@@ -174,4 +184,6 @@ public class MessageAdapter extends RecyclerView.Adapter {
             //TODO: set sender name as well
         }
     }
+
+
 }

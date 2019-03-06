@@ -6,7 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.os.Handler;
 import android.os.IBinder;
+import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,6 +23,7 @@ import com.example.jakobwilbrandt.chatt.Adapters.MessageAdapter;
 import com.example.jakobwilbrandt.chatt.DataClasses.IMessage;
 import com.example.jakobwilbrandt.chatt.DataClasses.IRoom;
 import com.example.jakobwilbrandt.chatt.DataClasses.Message;
+import com.example.jakobwilbrandt.chatt.DataClasses.Room;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -36,6 +39,7 @@ public class ChatActivity extends BaseServiceActivity {
     private IRoom currentRoom;
     private int position = 0;
     private MessageAdapter adapter;
+    private boolean isLoading = false;
 
 
     @Override
@@ -69,6 +73,8 @@ public class ChatActivity extends BaseServiceActivity {
 
             }
         });
+
+        initScrollListener();
 
         //Starting the Chat service, to run in the background.
         //Making sure the service is started: If it is, it will not be started twice. Android does not allow this
@@ -106,6 +112,7 @@ public class ChatActivity extends BaseServiceActivity {
 
                 //setting adapter to recyclerview
                 recyclerView.setAdapter(adapter);
+                recyclerView.scrollToPosition(adapter.getItemCount()-1);
 
 
                 mBound = true;
@@ -133,7 +140,61 @@ public class ChatActivity extends BaseServiceActivity {
 
             messages = chatService.getMessages(currentRoom);
             adapter.refreshMessages(messages);
+            recyclerView.scrollToPosition(adapter.getItemCount()-1);
 
         }
     };
+
+
+
+    private void initScrollListener() {
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+
+                if (!isLoading) {
+                    if (linearLayoutManager != null && linearLayoutManager.findFirstVisibleItemPosition() == 0) {
+                        //top of list!
+                        loadMore();
+                        isLoading = true;
+
+                    }
+                }
+            }
+        });
+
+
+    }
+
+    private void loadMore() {
+        //messages.add(0,null);
+        //adapter.notifyItemInserted(0);
+
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                int amountOfMessagesToHold = roomRTDB.getAmountOfMessagesToHold();
+                roomRTDB.setAmountOfMessagesToHold(amountOfMessagesToHold + 10);
+                IRoom room = chatService.getRoomRTDB().getRoomWithAllMessages(currentRoom);
+                messages = chatService.getRoomRTDB().getRangeOfMessagesFromBottom(room,amountOfMessagesToHold + 10);
+                adapter.refreshMessages(messages);
+                isLoading = false;
+
+            }
+        }, 700);
+
+
+    }
+
 }

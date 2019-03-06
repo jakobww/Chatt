@@ -1,5 +1,7 @@
 package com.example.jakobwilbrandt.chatt.ServerHandling.ServerFactory;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
@@ -95,13 +97,14 @@ public class FirebaseLoginAcitivity extends BaseActivity {
 
                     @Override
                     public void onCancel() {
-                        Log.d(TAG,"User cancelled login.");
+                        failDialog();
+
                     }
 
                     @Override
                     public void onError(FacebookException exception) {
                         Log.d(TAG,"Facebook login failed.");
-                        Toast.makeText(FirebaseLoginAcitivity.this, getString(R.string.sign_in_fail),Toast.LENGTH_LONG).show();
+                        failDialog();
                     }
                 });
 
@@ -147,7 +150,7 @@ public class FirebaseLoginAcitivity extends BaseActivity {
             Toast.makeText(FirebaseLoginAcitivity.this,getString(R.string.sign_in_sucess),Toast.LENGTH_LONG).show();
         } catch (ApiException e) {
 
-            Toast.makeText(FirebaseLoginAcitivity.this, getString(R.string.sign_in_fail),Toast.LENGTH_LONG).show();
+            failDialog();
 
         }
     }
@@ -206,6 +209,42 @@ public class FirebaseLoginAcitivity extends BaseActivity {
                         }
                     }
                 });
+    }
+
+    public void failDialog(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+
+        // set title
+
+        alertDialogBuilder.setTitle(com.example.jakobwilbrandt.chatt.R.string.sing_in_fail_msg);
+        alertDialogBuilder.setIcon(R.mipmap.ic_launcher);
+
+        // set dialog message
+        alertDialogBuilder
+                .setMessage(com.example.jakobwilbrandt.chatt.R.string.fail_message)
+                .setCancelable(false)
+                .setPositiveButton(com.example.jakobwilbrandt.chatt.R.string.confirm,new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+
+                    }
+                }).setNegativeButton("",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+
+                }
+                }).setNegativeButton("",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+
+                    }
+                });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+
+
+        // show it
+        alertDialog.show();
+
     }
 
 

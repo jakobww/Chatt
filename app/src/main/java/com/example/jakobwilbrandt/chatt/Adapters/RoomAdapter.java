@@ -43,6 +43,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
         this.roomList.clear();
         this.roomList.addAll(Rooms);
         notifyDataSetChanged();
+
     }
 
     @Override
@@ -63,6 +64,8 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
 
         holder.chevronIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_action_chevron));
 
+        holder.RoomDescTxt.setText(room.getDescription());
+
         //TODO: set on click listener
 
     }
@@ -77,6 +80,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
     class RoomViewHolder extends RecyclerView.ViewHolder {
 
         TextView RoomNameTxt;
+        TextView RoomDescTxt;
         ImageView chevronIcon;
 
         public RoomViewHolder(View itemView) {
@@ -84,6 +88,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
             itemView.setTag(this);
             itemView.setOnClickListener(clickListener);
             RoomNameTxt = itemView.findViewById(R.id.room_item_name);
+            RoomDescTxt = itemView.findViewById(R.id.room_item_latest_msg);
             chevronIcon = itemView.findViewById(R.id.chevron_icon);
 
             //TODO: set last message sent time

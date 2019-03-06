@@ -49,8 +49,13 @@ public class FirebaseUserHandling implements IUserHandling {
     @Override
     public String getCurrentUserId() {
         //TODO: implement getting current user id.
-        return "random";
-    }
+        FirebaseAuth auth;
+        auth = FirebaseAuth.getInstance();
+        if(auth != null) {
+            return auth.getCurrentUser().getUid().toString();
+        }
+        return "Anonymous";
+        }
 
 
     @Override

@@ -10,11 +10,6 @@ public class FirebaseServerFactory implements IServerFactory {
         return new FirebaseUserHandling();
     }
 
-    @Override
-    public IMessageRTDB CreateMessageRTDB() {
-        return new FirebaseMessageRTDB();
-
-    }
 
     @Override
     public IRoomRTDB CreateRoomRTDB() {

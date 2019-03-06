@@ -16,6 +16,10 @@ public interface IRoomRTDB {
     void setContext(Context context);
     ArrayList<IMessage> getMessagesFromRoom(IRoom room);
     void addRoom(IRoom room);
+    IRoom getRoomWithAllMessages(IRoom room);
+    void setAmountOfMessagesToHold(int amountOfMessagesToHold);
+    int getAmountOfMessagesToHold();
+    ArrayList<IMessage> getRangeOfMessagesFromBottom(IRoom tempRoom, int amountFromBottom);
 
 
 }
