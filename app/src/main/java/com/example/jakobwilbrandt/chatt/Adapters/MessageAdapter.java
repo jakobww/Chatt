@@ -10,16 +10,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.jakobwilbrandt.chatt.DataClasses.IMessage;
+import com.example.jakobwilbrandt.chatt.R;
 import com.example.jakobwilbrandt.chatt.serverFactory.FirebaseServerFactory;
 import com.example.jakobwilbrandt.chatt.serverFactory.IServerFactory;
 import com.example.jakobwilbrandt.chatt.serverFactory.IUserHandling;
 import com.example.jakobwilbrandt.chatt.serverFactory.ServerProducer;
-
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Belal on 10/18/2017.
+ * Created by Jakob Wilbrandt.
  */
 
 
@@ -32,13 +32,15 @@ public class MessageAdapter extends RecyclerView.Adapter {
     //we are storing all the messages in a list
     private List<IMessage> messageList;
 
+    //Used for avatars
     private String photoUrl;
+
+    //Used for checking if we should inflate own message or receivers
     private boolean isOwnMessage = false;
 
-    //Determines if sender or receiver
+    //Constants used in check if receiver or sender
     private final int VIEW_TYPE_MESSAGE_SENT = 0;
     private final int VIEW_TYPE_MESSAGE_RECEIVED = 1;
-    private final int VIEW_TYPE_LOADING  = 2;
 
     //getting the context and messages list with constructor
     public MessageAdapter(Context context, List<IMessage> messageList) {
@@ -49,11 +51,13 @@ public class MessageAdapter extends RecyclerView.Adapter {
         photoUrl = userHandling.getAvatarUrl();
     }
 
+    //Used to refresh the list once new messages arrives.
     public void refreshMessages(ArrayList<IMessage> Messages) {
         this.messageList.clear();
         this.messageList.addAll(Messages);
         notifyDataSetChanged();
     }
+
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -61,10 +65,11 @@ public class MessageAdapter extends RecyclerView.Adapter {
 
         View view;
 
+        //We check which viewholder to create
         if (viewType == VIEW_TYPE_MESSAGE_SENT) {
             isOwnMessage = true;
             view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.message_item_sent, parent, false);
+                    .inflate(context.getResources().getLayout(R.layout.message_item_sent), parent, false);
             return new SentMessageViewHolder(view);
         }
         else{
@@ -84,11 +89,9 @@ public class MessageAdapter extends RecyclerView.Adapter {
     // Determines the appropriate ViewType according to the sender of the message or loading view.
     @Override
     public int getItemViewType(int position) {
+
+        //Getting the correct message and checking if sent or received message
         IMessage message = messageList.get(position);
-
-
-
-
         IServerFactory serverFactory = ServerProducer.getFactory("firebase");
         IUserHandling userHandling = serverFactory.CreateUserHandler();
         String currentUserId = userHandling.getCurrentUserId();
@@ -134,33 +137,38 @@ public class MessageAdapter extends RecyclerView.Adapter {
         public SentMessageViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            //If sent message we create the corresponding layouts
             messageText = itemView.findViewById(R.id.sent_text);
             timeText = itemView.findViewById(R.id.sent_sender_time);
             avatarOwn = itemView.findViewById(R.id.avatar_sent_message);
 
-
-
         }
 
         void bind(IMessage message) {
+            //On binding we set the values for each element corresponding to the current message
             messageText.setText(message.getMessageContent());
-
-            // Format the stored timestamp into a readable String using method.
-            timeText.setText(message.getTimeOfMessage());
-            //TODO: set sender name as well
+            String userName;
+            IServerFactory serverFactory = ServerProducer.getFactory("firebase");
+            IUserHandling userHandling = serverFactory.CreateUserHandler();
+            userName = userHandling.getUsername();
+            String nameAndTime = context.getString(R.string.time) + message.getTimeOfMessage() + "\n" + context.getString(R.string.sender) + userName;
+            timeText.setText(nameAndTime);
             Glide.with(context).load(photoUrl).into(avatarOwn);
         }
     }
 
     private class ReceivedMessageViewHolder extends RecyclerView.ViewHolder {
 
+
         TextView messageText;
         ImageView avatarOther;
         TextView timeText;
 
+
         public ReceivedMessageViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            //If received message we create the corresponding layouts
             messageText = itemView.findViewById(R.id.received_text);
             timeText = itemView.findViewById(R.id.received_sender_time);
             avatarOther = itemView.findViewById(R.id.avatar_received_message);
@@ -168,6 +176,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
         }
 
         void bind(IMessage message) {
+            //On binding we set the values for each element corresponding to the current message
             messageText.setText(message.getMessageContent());
             IServerFactory serverFactory = ServerProducer.getFactory("firebase");
             IUserHandling userHandling = serverFactory.CreateUserHandler();
@@ -175,8 +184,10 @@ public class MessageAdapter extends RecyclerView.Adapter {
             if (message.getSenderId().equals(currentUserId)){
             Glide.with(context).load(photoUrl).into(avatarOther);
             }
-            timeText.setText(message.getTimeOfMessage());
-            //TODO: set sender name as well
+            String userName;
+            userName = userHandling.getUsername();
+            String nameAndTime = context.getString(R.string.time) + message.getTimeOfMessage() + "\n" + context.getString(R.string.sender) + userName;
+            timeText.setText(nameAndTime);
         }
     }
 

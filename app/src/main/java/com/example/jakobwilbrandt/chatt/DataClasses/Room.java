@@ -2,7 +2,9 @@ package com.example.jakobwilbrandt.chatt.DataClasses;
 
 import java.util.ArrayList;
 import java.util.UUID;
-
+/**
+ * Created by Jakob Wilbrandt.
+ */
 public class Room implements IRoom {
 
 
@@ -14,6 +16,7 @@ public class Room implements IRoom {
 
     public Room() {
         // Creating a random UUID (Universally unique identifier).
+        // Empty constructor is needed in order to have the ability to easily convert from JSON to Room.
         UUID uuid = UUID.randomUUID();
         this.roomId = uuid.toString();
         messages = new ArrayList<>();
@@ -59,11 +62,13 @@ public class Room implements IRoom {
         messages.add(message);
     }
 
+    //This method is used in loading more messages in recycler view
     @Override
     public void setAmountOfMsg(Integer amountOfMsg) {
         this.amountOfMsg = amountOfMsg;
     }
 
+    //This method is used in loading more messages in recycler view
     @Override
     public Integer getAmountOfMsg() {
         return amountOfMsg;

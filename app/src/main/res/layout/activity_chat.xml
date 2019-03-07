@@ -39,14 +39,16 @@
             android:id="@+id/input_message"
             android:layout_width="0dp"
             android:layout_height="52dp"
+            android:inputType="text"
             android:layout_gravity="start"
             android:layout_marginBottom="8dp"
+            android:hint="@string/please_enter_message"
             android:layout_marginEnd="50dp"
             android:layout_marginStart="8dp"
             android:layout_weight="1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/message_rec_view"
-            app:layout_constraintStart_toStartOf="@+id/message_rec_view" />
+            app:layout_constraintStart_toStartOf="@+id/message_rec_view"/>
 
         <ImageView
             android:id="@+id/send_button"
@@ -58,6 +60,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/input_message"
             app:layout_constraintStart_toEndOf="@+id/input_message"
             app:layout_constraintTop_toTopOf="@+id/input_message"
+            android:contentDescription="@string/send_button"
             app:srcCompat="@drawable/ic_action_send" />
 
 

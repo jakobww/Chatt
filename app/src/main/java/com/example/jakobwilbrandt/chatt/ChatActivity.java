@@ -15,30 +15,31 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-
+import android.widget.TextView;
+import android.widget.Toast;
 import com.example.jakobwilbrandt.chatt.Adapters.MessageAdapter;
 import com.example.jakobwilbrandt.chatt.DataClasses.IMessage;
 import com.example.jakobwilbrandt.chatt.DataClasses.IRoom;
 import com.example.jakobwilbrandt.chatt.DataClasses.Message;
-import com.example.jakobwilbrandt.chatt.DataClasses.Room;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-
+/**
+ * Created by Jakob Wilbrandt.
+ */
 public class ChatActivity extends BaseServiceActivity {
+
 
     private ArrayList<IMessage> messages = new ArrayList();
     private RecyclerView recyclerView;
     private IRoom currentRoom;
     private int position = 0;
     private MessageAdapter adapter;
+    private TextView title;
+    //For checking if the recycler view is loading new messages
     private boolean isLoading = false;
 
 
@@ -56,24 +57,33 @@ public class ChatActivity extends BaseServiceActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        //Connecting views with xml
+        title = findViewById(R.id.title_messages_activity);
         ImageView btn = findViewById(R.id.send_button);
         final EditText inputTxt = findViewById(R.id.input_message);
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String message = inputTxt.getText().toString();
-                inputTxt.setText("");
-                DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss yyyy/MM/dd");
-                Date date = new Date();
-                dateFormat.format(date);
-                String time = date.toString();
-                IMessage msg = new Message(userHandling.getCurrentUserId(),message,time);
-                roomRTDB.addMessageToRoom(currentRoom,msg);
-
+                //Getting the input message and add it to database
+                if(!inputTxt.getText().toString().equals("")) {
+                    String message = inputTxt.getText().toString();
+                    inputTxt.setText("");
+                    Date date = new Date();
+                    String strDateFormat = "hh:mm:ss yyyy/MM/dd";
+                    DateFormat dateFormat = new SimpleDateFormat(strDateFormat);
+                    String formattedDate= dateFormat.format(date);
+                    IMessage msg = new Message(userHandling.getCurrentUserId(), message, formattedDate);
+                    roomRTDB.addMessageToRoom(currentRoom, msg);
+                }
+                else {
+                    //If the user did not enter anything
+                    Toast.makeText(getApplicationContext(), R.string.please_enter_message,Toast.LENGTH_LONG).show();
+                }
             }
         });
 
+        //For listening to top scroll
         initScrollListener();
 
         //Starting the Chat service, to run in the background.
@@ -96,11 +106,15 @@ public class ChatActivity extends BaseServiceActivity {
                 ChatService.BoundBinder binder = (ChatService.BoundBinder) service;
                 chatService = binder.getService();
 
+                //Getting the index of room pressed
                 position = getIntent().getExtras().getInt("roomIndex");
 
 
-                if(chatService.getRooms().size() > 0){
-                currentRoom = chatService.getRooms().get(position);}
+                if(chatService.getRooms().size() > 0) {
+                    //Getting the current room
+                    currentRoom = chatService.getRooms().get(position);
+                    title.setText(currentRoom.getName());
+                }
                 else{
                     finish();
                 }
@@ -138,6 +152,7 @@ public class ChatActivity extends BaseServiceActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
 
+            //New data has arrived in service and the activityis notified
             messages = chatService.getMessages(currentRoom);
             adapter.refreshMessages(messages);
             recyclerView.scrollToPosition(adapter.getItemCount()-1);
@@ -147,6 +162,7 @@ public class ChatActivity extends BaseServiceActivity {
 
 
 
+    //For listening for top scrolling
     private void initScrollListener() {
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -174,6 +190,7 @@ public class ChatActivity extends BaseServiceActivity {
 
     }
 
+    //Loading more elements into list
     private void loadMore() {
         //messages.add(0,null);
         //adapter.notifyItemInserted(0);

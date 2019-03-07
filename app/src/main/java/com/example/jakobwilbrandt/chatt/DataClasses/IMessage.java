@@ -1,6 +1,8 @@
 package com.example.jakobwilbrandt.chatt.DataClasses;
-
-import java.sql.Time;
+/**
+ * Created by Jakob Wilbrandt.
+ * Using interfaces for decoupling
+ */
 
 public interface IMessage {
 

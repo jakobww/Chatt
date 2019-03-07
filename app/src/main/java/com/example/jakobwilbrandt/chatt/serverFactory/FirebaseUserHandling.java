@@ -4,7 +4,11 @@ import android.util.Log;
 import com.example.jakobwilbrandt.chatt.DataClasses.IUser;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
+/**
+ * Created by Jakob Wilbrandt.
+ * This class is part of the serverfactory, which decouples the implementation of the realtime database from the rest of the code.
+ * By doing so, it's possible to implement another realtime database more easily.
+ */
 public class FirebaseUserHandling implements IUserHandling {
 
 
@@ -13,6 +17,7 @@ public class FirebaseUserHandling implements IUserHandling {
     FirebaseAuth auth;
 
 
+    //Used in loginactivity
     @Override
     public boolean CheckIfLoggedIn() {
         FirebaseAuth auth;
@@ -41,7 +46,7 @@ public class FirebaseUserHandling implements IUserHandling {
         auth = FirebaseAuth.getInstance();
         if(auth != null) {
 
-            return auth.getCurrentUser().getUid().toString();
+            return auth.getCurrentUser().getUid();
         }
         return "Anonymous";
     }
@@ -52,13 +57,14 @@ public class FirebaseUserHandling implements IUserHandling {
         auth = FirebaseAuth.getInstance();
         if(auth != null) {
 
-            return auth.getCurrentUser().getDisplayName().toString();
+            return auth.getCurrentUser().getDisplayName();
         }
         return "Anonymous";
 
     }
 
 
+    //Used in the options menu
     @Override
     public void LogOut() {
         FirebaseAuth auth;
@@ -72,6 +78,7 @@ public class FirebaseUserHandling implements IUserHandling {
         }
     }
 
+    //Used in the messages
     @Override
     public String getAvatarUrl(){
         FirebaseAuth auth;

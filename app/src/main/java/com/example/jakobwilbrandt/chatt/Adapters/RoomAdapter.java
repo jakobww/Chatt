@@ -7,15 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.example.jakobwilbrandt.chatt.DataClasses.IRoom;
 import com.example.jakobwilbrandt.chatt.R;
-
 import java.util.ArrayList;
-import java.util.List;
 
 /**
- * Created by Belal on 10/18/2017.
+ * Created by Jakob Wilbrandt.
  */
 
 
@@ -39,6 +36,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
         this.clickListener = clickListener;
     }
 
+    //Used whenever new rooms arrives in the list, to update the RecyclerView
     public void refreshRooms(ArrayList<IRoom> Rooms) {
         this.roomList.clear();
         this.roomList.addAll(Rooms);
@@ -62,8 +60,10 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
         //binding the data with the viewholder views
         holder.RoomNameTxt.setText(room.getName());
 
+        //Setting the chevreon icon
         holder.chevronIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_action_chevron));
 
+        //Setting the description of the room
         holder.RoomDescTxt.setText(room.getDescription());
 
         //TODO: set on click listener
@@ -87,6 +87,8 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
             super(itemView);
             itemView.setTag(this);
             itemView.setOnClickListener(clickListener);
+
+            //On creation of the viewholder we find the right elements in our views
             RoomNameTxt = itemView.findViewById(R.id.room_item_name);
             RoomDescTxt = itemView.findViewById(R.id.room_item_latest_msg);
             chevronIcon = itemView.findViewById(R.id.chevron_icon);

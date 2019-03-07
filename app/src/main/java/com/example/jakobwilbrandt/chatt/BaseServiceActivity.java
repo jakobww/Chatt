@@ -1,22 +1,19 @@
 package com.example.jakobwilbrandt.chatt;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.PersistableBundle;
-import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-
+/**
+ * Created by Jakob Wilbrandt.
+ * Activity used for each activity that needs to speak to service
+ */
 public class BaseServiceActivity extends BaseActivity {
 
     protected ServiceConnection chatServiceConnection;
     protected ChatService chatService;
     protected boolean mBound = false;
-    private final int NEW_MESSAGE = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +23,6 @@ public class BaseServiceActivity extends BaseActivity {
         if(savedInstanceState != null){
             mBound = savedInstanceState.getBoolean(getString(R.string.BOUND_STATE));
         }
-
-
 
     }
 

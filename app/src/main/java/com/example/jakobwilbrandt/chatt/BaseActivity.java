@@ -6,13 +6,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-
 import com.example.jakobwilbrandt.chatt.NetworkMonitor.NetworkChangeReceiver;
 import com.example.jakobwilbrandt.chatt.serverFactory.IRoomRTDB;
 import com.example.jakobwilbrandt.chatt.serverFactory.IServerFactory;
 import com.example.jakobwilbrandt.chatt.serverFactory.IUserHandling;
 import com.example.jakobwilbrandt.chatt.serverFactory.ServerProducer;
-
+/**
+ * Created by Jakob Wilbrandt.
+ * Activity used both chat and and main, in order not to duplicate code.
+ */
 public class BaseActivity extends AppCompatActivity {
 
     String TAG = "BaseActivity";

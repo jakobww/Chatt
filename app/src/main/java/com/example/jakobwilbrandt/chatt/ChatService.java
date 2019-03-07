@@ -17,7 +17,9 @@ import android.util.Log;
 import com.example.jakobwilbrandt.chatt.DataClasses.IMessage;
 import com.example.jakobwilbrandt.chatt.DataClasses.IRoom;
 import com.example.jakobwilbrandt.chatt.serverFactory.IRoomRTDB;
-
+/**
+ * Created by Jakob Wilbrandt.
+ */
 import java.util.ArrayList;
 
 public class ChatService extends Service {
@@ -116,9 +118,8 @@ public class ChatService extends Service {
         @Override
         public void onReceive(Context context, Intent intent) {
 
+            //When data is received the messages list is updated using observer pattern and the activities are notified
             Rooms = roomRTDB.getUpdatedRooms();
-
-
             Intent intent2 = new Intent("NEW_DATA_FOR_ACTIVITIES");
             LocalBroadcastManager.getInstance(context).sendBroadcast(intent2);
             showNotification(getString(com.example.jakobwilbrandt.chatt.R.string.new_data),getString(com.example.jakobwilbrandt.chatt.R.string.app_name));

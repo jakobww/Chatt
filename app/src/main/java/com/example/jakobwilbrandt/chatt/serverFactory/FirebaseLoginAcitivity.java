@@ -33,7 +33,11 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-
+/**
+ * Created by Jakob Wilbrandt.
+ * This class is part of the serverfactory, which decouples the implementation of the realtime database from the rest of the code.
+ * By doing so, it's possible to implement another realtime database more easily.
+ */
 public class FirebaseLoginAcitivity extends BaseActivity {
 
     private FirebaseAuth auth;
@@ -51,21 +55,24 @@ public class FirebaseLoginAcitivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
+        //Checking if the user is logged in. If so, close the login activity and redirect to MainActivity.
         if(user != null) {
             Intent alreadyLoggedInIntent = new Intent(FirebaseLoginAcitivity.this,MainActivity.class);
             startActivity(alreadyLoggedInIntent);
             finish();
         }
 
+        //If user is not logged in, set the views, and carry on logging in.
         setContentView(R.layout.activity_firebase_login);
         googleLoginBtn = findViewById(R.id.google_login_button);
         googleLoginBtn.setSize(SignInButton.SIZE_STANDARD);
 
 
 
-        //Setting onclickListeners.
+        //Setting onclickListener to sign in using google.
         googleLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,10 +80,13 @@ public class FirebaseLoginAcitivity extends BaseActivity {
                     case R.id.google_login_button:
                         signIn();
                         break;
+                    default:
+                        break;
                 }
             }
         });
 
+        //Configuring the sign in options.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -86,6 +96,7 @@ public class FirebaseLoginAcitivity extends BaseActivity {
         googleSignInClient = GoogleSignIn.getClient(this, gso);
 
 
+        //Listen for callback, when the result of the login comes in, and define what happens.
         callbackManager = CallbackManager.Factory.create();
         LoginManager.getInstance().registerCallback(callbackManager,
                 new FacebookCallback<LoginResult>() {
@@ -97,12 +108,14 @@ public class FirebaseLoginAcitivity extends BaseActivity {
 
                     @Override
                     public void onCancel() {
+                        //If sign in failed - show the user a dialog
                         failDialog();
 
                     }
 
                     @Override
                     public void onError(FacebookException exception) {
+                        //If sign in failed - show the user a dialog
                         Log.d(TAG,"Facebook login failed.");
                         failDialog();
                     }
@@ -114,6 +127,7 @@ public class FirebaseLoginAcitivity extends BaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
+        //At the login screen the normal menu item for logging out should not be visible since you're never here if logged in.
         MenuItem item = menu.findItem(R.id.action_loginout);
         item.setVisible(false);
         return true;
@@ -142,6 +156,7 @@ public class FirebaseLoginAcitivity extends BaseActivity {
     }
 
 
+    //When successfully signed in using either google or facebook, try signing into firebase using the given account.
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
@@ -159,7 +174,6 @@ public class FirebaseLoginAcitivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         auth = FirebaseAuth.getInstance();
-
     }
 
 
@@ -215,7 +229,6 @@ public class FirebaseLoginAcitivity extends BaseActivity {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
         // set title
-
         alertDialogBuilder.setTitle(com.example.jakobwilbrandt.chatt.R.string.sing_in_fail_msg);
         alertDialogBuilder.setIcon(R.mipmap.ic_launcher);
 

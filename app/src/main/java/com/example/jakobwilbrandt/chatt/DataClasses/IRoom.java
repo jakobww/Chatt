@@ -1,7 +1,10 @@
 package com.example.jakobwilbrandt.chatt.DataClasses;
 
 import java.util.ArrayList;
-
+/**
+ * Created by Jakob Wilbrandt.
+ * Using interfaces for decoupling
+ */
 public interface IRoom {
 
 

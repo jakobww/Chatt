@@ -30,4 +30,9 @@
     <string name="confirm">Ok</string>
     <string name="no_internet">No internet connection. Please reconnect.</string>
     <string name="messages">Messages</string>
+    <string name="please_enter_message">Please enter a message.</string>
+    <string name="rooms">Rooms</string>
+    <string name="send_button">send button</string>
+    <string name="time">Time:</string>
+    <string name="sender">Sender:</string>
 </resources>

@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
-import android.os.Handler;
 import android.os.IBinder;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
@@ -15,15 +14,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-
 import com.example.jakobwilbrandt.chatt.Adapters.RoomAdapter;
 import com.example.jakobwilbrandt.chatt.DataClasses.IRoom;
-import com.example.jakobwilbrandt.chatt.DataClasses.Message;
-import com.example.jakobwilbrandt.chatt.DataClasses.Room;
-
 import java.util.ArrayList;
-import java.util.List;
-
+/**
+ * Created by Jakob Wilbrandt.
+ */
 public class MainActivity extends BaseServiceActivity {
 
 
@@ -45,10 +41,12 @@ public class MainActivity extends BaseServiceActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setBackgroundColor(0xffffff);
 
+
         final SwipeRefreshLayout pullToRefresh = findViewById(R.id.pullToRefresh);
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                //Stop and start listening to get new data
                 roomRTDB.stopListening();
                 roomRTDB.startListening();
                 pullToRefresh.setRefreshing(false);
@@ -113,21 +111,6 @@ public class MainActivity extends BaseServiceActivity {
                 mBound = true;
 
 
-                /*Room room1;
-                room1 = new Room("Living room","A room where everything can be discussed");
-                roomRTDB.addRoom(room1);
-                room1 = new Room("Pan flutes", "A room with a pan flute community");
-                roomRTDB.addRoom(room1);
-                room1 = new Room("Great White","A room of sharks");
-                roomRTDB.addRoom(room1);
-                room1 = new Room("Minutes of sunshine", "What do you do during the day?");
-                roomRTDB.addRoom(room1);*/
-
-
-
-
-
-
             }
 
             public void onServiceDisconnected(ComponentName className) {
@@ -149,6 +132,7 @@ public class MainActivity extends BaseServiceActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
 
+            //The service got new data.
             Rooms = chatService.getRooms();
             adapter.refreshRooms(Rooms);
 
