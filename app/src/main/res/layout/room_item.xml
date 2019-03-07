@@ -34,7 +34,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorAccent"
                     android:layout_gravity="start"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline" />
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
 
                 <TextView
                     android:id="@+id/room_item_latest_msg"

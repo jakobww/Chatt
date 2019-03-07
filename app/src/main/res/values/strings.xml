@@ -29,4 +29,5 @@
     <string name="sing_in_fail_msg">Sign in Failed</string>
     <string name="confirm">Ok</string>
     <string name="no_internet">No internet connection. Please reconnect.</string>
+    <string name="messages">Messages</string>
 </resources>

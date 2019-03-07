@@ -6,4 +6,6 @@ public interface IUser {
 
     IUser getUser();
 
+    void setUser(IUser user);
+
 }

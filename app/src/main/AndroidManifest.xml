@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".BaseActivity" />
-        <activity android:name=".ServerHandling.ServerFactory.FirebaseLoginAcitivity" />
+        <activity android:name=".serverFactory.FirebaseLoginAcitivity" />
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"

@@ -8,26 +8,37 @@
     android:orientation="vertical"
     tools:context=".ChatActivity">
 
+    <TextView
+        android:id="@+id/title_messages_activity"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:text="@string/messages" />
+
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="bottom"
         android:orientation="horizontal">
 
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/message_rec_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="70dp"
-            app:layout_constraintBottom_toTopOf="@+id/input_message"
+            android:layout_marginBottom="60dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/input_message"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="52dp"
             android:layout_gravity="start"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="50dp"

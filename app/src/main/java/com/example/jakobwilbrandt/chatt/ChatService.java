@@ -1,33 +1,24 @@
 package com.example.jakobwilbrandt.chatt;
 
-import android.annotation.TargetApi;
 import android.app.Notification;
-import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Binder;
-import android.os.Build;
 import android.os.IBinder;
-import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.example.jakobwilbrandt.chatt.DataClasses.IMessage;
 import com.example.jakobwilbrandt.chatt.DataClasses.IRoom;
-import com.example.jakobwilbrandt.chatt.ServerHandling.ServerFactory.IRoomRTDB;
-import com.example.jakobwilbrandt.chatt.ServerHandling.ServerFactory.IServerFactory;
+import com.example.jakobwilbrandt.chatt.serverFactory.IRoomRTDB;
 
 import java.util.ArrayList;
-
-import static android.support.v4.app.NotificationCompat.PRIORITY_LOW;
 
 public class ChatService extends Service {
 

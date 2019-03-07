@@ -1,4 +1,4 @@
-package com.example.jakobwilbrandt.chatt.ServerHandling.ServerFactory;
+package com.example.jakobwilbrandt.chatt.serverFactory;
 
 public class ServerProducer {
 

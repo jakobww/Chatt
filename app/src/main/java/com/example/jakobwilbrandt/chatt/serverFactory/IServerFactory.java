@@ -1,4 +1,4 @@
-package com.example.jakobwilbrandt.chatt.ServerHandling.ServerFactory;
+package com.example.jakobwilbrandt.chatt.serverFactory;
 
 import com.example.jakobwilbrandt.chatt.BaseActivity;
 

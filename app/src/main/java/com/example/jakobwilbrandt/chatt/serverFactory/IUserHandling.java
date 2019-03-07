@@ -1,14 +1,10 @@
-package com.example.jakobwilbrandt.chatt.ServerHandling.ServerFactory;
+package com.example.jakobwilbrandt.chatt.serverFactory;
 
 import com.example.jakobwilbrandt.chatt.DataClasses.IUser;
-
-import java.util.ArrayList;
 
 public interface IUserHandling {
 
     boolean CheckIfLoggedIn();
-
-    ArrayList<IUser> LoadAllUsers();
 
     void addUser(IUser user);
 
@@ -17,5 +13,7 @@ public interface IUserHandling {
     void LogOut();
 
     String getAvatarUrl();
+
+    String getUsername();
 
 }

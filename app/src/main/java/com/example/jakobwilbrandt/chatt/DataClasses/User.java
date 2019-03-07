@@ -1,22 +1,20 @@
 package com.example.jakobwilbrandt.chatt.DataClasses;
 
-
-
 public class User implements IUser {
 
-    private String avatarPath;
+    IUser user;
+
+    public User(IUser user) {
+        this.user = user;
+    }
 
     @Override
     public IUser getUser() {
-        return this;
+        return user;
     }
 
-
-    public String getAvatarPath() {
-        return avatarPath;
-    }
-
-    public void setAvatarPath(String avatarPath) {
-        this.avatarPath = avatarPath;
+    @Override
+    public void setUser(IUser user) {
+        this.user = user;
     }
 }

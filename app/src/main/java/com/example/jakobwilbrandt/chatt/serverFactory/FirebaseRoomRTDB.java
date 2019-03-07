@@ -1,4 +1,4 @@
-package com.example.jakobwilbrandt.chatt.ServerHandling.ServerFactory;
+package com.example.jakobwilbrandt.chatt.serverFactory;
 
 import android.content.Context;
 import android.content.Intent;

@@ -8,10 +8,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.jakobwilbrandt.chatt.NetworkMonitor.NetworkChangeReceiver;
-import com.example.jakobwilbrandt.chatt.ServerHandling.ServerFactory.IRoomRTDB;
-import com.example.jakobwilbrandt.chatt.ServerHandling.ServerFactory.IServerFactory;
-import com.example.jakobwilbrandt.chatt.ServerHandling.ServerFactory.IUserHandling;
-import com.example.jakobwilbrandt.chatt.ServerHandling.ServerFactory.ServerProducer;
+import com.example.jakobwilbrandt.chatt.serverFactory.IRoomRTDB;
+import com.example.jakobwilbrandt.chatt.serverFactory.IServerFactory;
+import com.example.jakobwilbrandt.chatt.serverFactory.IUserHandling;
+import com.example.jakobwilbrandt.chatt.serverFactory.ServerProducer;
 
 public class BaseActivity extends AppCompatActivity {
 

@@ -4,10 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-
-import com.example.jakobwilbrandt.chatt.ServerHandling.ServerFactory.IUserHandling;
-import com.example.jakobwilbrandt.chatt.ServerHandling.ServerFactory.FirebaseLoginAcitivity;
 
 public class SplashActivity extends BaseActivity {
 

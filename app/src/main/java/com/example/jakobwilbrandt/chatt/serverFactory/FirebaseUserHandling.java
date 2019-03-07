@@ -1,15 +1,9 @@
-package com.example.jakobwilbrandt.chatt.ServerHandling.ServerFactory;
+package com.example.jakobwilbrandt.chatt.serverFactory;
 
-import android.support.annotation.NonNull;
 import android.util.Log;
-import android.widget.Toast;
-
 import com.example.jakobwilbrandt.chatt.DataClasses.IUser;
-import com.example.jakobwilbrandt.chatt.NetworkMonitor.NetworkChangeReceiver;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import java.util.ArrayList;
 
 public class FirebaseUserHandling implements IUserHandling {
 
@@ -34,16 +28,10 @@ public class FirebaseUserHandling implements IUserHandling {
         return isLoggedIn;
     }
 
-    @Override
-    public ArrayList<IUser> LoadAllUsers() {
-
-        //TODO: loading users from firebase
-        return null;
-    }
 
     @Override
     public void addUser(IUser user) {
-        //TODO: adding user to db
+        //For firebase it is handled in LoginActivity.
     }
 
     @Override
@@ -52,10 +40,23 @@ public class FirebaseUserHandling implements IUserHandling {
         FirebaseAuth auth;
         auth = FirebaseAuth.getInstance();
         if(auth != null) {
+
             return auth.getCurrentUser().getUid().toString();
         }
         return "Anonymous";
+    }
+
+    @Override
+    public String getUsername(){
+        FirebaseAuth auth;
+        auth = FirebaseAuth.getInstance();
+        if(auth != null) {
+
+            return auth.getCurrentUser().getDisplayName().toString();
         }
+        return "Anonymous";
+
+    }
 
 
     @Override

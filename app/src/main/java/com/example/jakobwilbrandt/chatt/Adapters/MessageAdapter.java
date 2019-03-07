@@ -7,18 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.example.jakobwilbrandt.chatt.DataClasses.IMessage;
-import com.example.jakobwilbrandt.chatt.DataClasses.IRoom;
-import com.example.jakobwilbrandt.chatt.DataClasses.IUser;
-import com.example.jakobwilbrandt.chatt.R;
-import com.example.jakobwilbrandt.chatt.ServerHandling.ServerFactory.FirebaseServerFactory;
-import com.example.jakobwilbrandt.chatt.ServerHandling.ServerFactory.IServerFactory;
-import com.example.jakobwilbrandt.chatt.ServerHandling.ServerFactory.IUserHandling;
-import com.example.jakobwilbrandt.chatt.ServerHandling.ServerFactory.ServerProducer;
+import com.example.jakobwilbrandt.chatt.serverFactory.FirebaseServerFactory;
+import com.example.jakobwilbrandt.chatt.serverFactory.IServerFactory;
+import com.example.jakobwilbrandt.chatt.serverFactory.IUserHandling;
+import com.example.jakobwilbrandt.chatt.serverFactory.ServerProducer;
 
 import java.util.ArrayList;
 import java.util.List;
